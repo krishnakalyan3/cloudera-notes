@@ -1,0 +1,8 @@
+# Check JKS password
+keytool -list -keystore file_path.jks
+
+# Check host certificate
+openssl s_client -connect <service-hostname>:<port>
+
+# Inspect PEM certificate
+openssl x509 -noout -in file_path.pem -noout -text 

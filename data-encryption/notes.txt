@@ -1,0 +1,18 @@
+# Create Key
+hadoop key create testkey
+
+# List Keys
+hadoop key list
+
+# Other Commands
+hadoop key roll <keyname>
+hadoop key delete <keyname>
+
+# Zone Operations
+hdfs dfs -mkdir <dirName>
+hdfs crypto -createZone -keyName <keyname> -path /testDemo
+hdfs crypto -listZones
+hdfs crypto -getFileEncryptionInfo -path /<zoneName>/<fileName>
+hdfs crypto -listReencryptionStatus
+
+

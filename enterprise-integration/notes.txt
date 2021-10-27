@@ -1,0 +1,1 @@
+hadoop org.apache.hadoop.security.HadoopKerberosName rangerkms/<principle>

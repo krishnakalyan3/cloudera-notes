@@ -1,0 +1,7 @@
+hostname 
+hostname -I
+
+dig -x ip_add
+dig hostname
+
+

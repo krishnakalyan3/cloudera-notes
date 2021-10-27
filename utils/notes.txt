@@ -1,0 +1,9 @@
+
+export LOG_DIR='hdfs'
+export KT_DIR=$(ls -1dtr /var/run/cloudera-scm-agent/process/*$LOG_DIR* | tail -1)
+kinit -kt $KT_DIR/${LOG_DIR}.keytab ${LOG_DIR}/$(hostname -f)
+
+# Banned users
+
+# Hadoop user
+

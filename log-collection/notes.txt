@@ -1,0 +1,5 @@
+
+# Collectiong process directory logs
+export RANGER_KMS_PROCESS_DIR=$(ls -1dtr /var/run/cloudera-scm-agent/process/*RANGER_KMS_SERVER | tail -1) 
+tar cvzf /tmp/ranger_kms_process_dir.tar.gz $RANGER_KMS_PROCESS_DIR
+tar cvzf /tmp/ranger_kms_logs.tar.gz /var/log/ranger/kms/*

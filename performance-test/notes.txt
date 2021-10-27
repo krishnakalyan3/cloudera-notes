@@ -1,0 +1,4 @@
+export SPARK_EXAMPELS=/opt/cloudera/parcels/CDH/lib/spark/examples/jars
+
+spark-submit --class org.apache.spark.examples.SparkPi --master yarn \
+--deploy-mode client $SPARK_EXAMPELS/spark-examples_*.jar 10
