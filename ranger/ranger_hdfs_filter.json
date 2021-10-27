@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "createDate": "2021-10-08T11:15:31Z",
+  "updateDate": "2021-10-09T08:46:48Z",
+  "owner": "Admin",
+  "updatedBy": "Admin",
+  "name": "cm_hdfs",
+  "description": "Hdfs repo",
+  "repositoryType": "hdfs",
+  "config": "{\"tag.download.auth.users\":\"hdfs\",\"password\":\"*****\",\"policy.download.auth.users\":\"hdfs\",\"hadoop.security.authentication\":\"kerberos\",\"hadoop.rpc.protection\":\"authentication\",\"fs.default.name\":\"hdfs://ranger_host:8020\",\"hadoop.security.authorization\":\"true\",\"ranger.plugin.audit.filters\":\"[{'accessResult':'DENIED','isAudited':true},{'actions':['delete','rename'],'isAudited':true},{'users':['hdfs'],'actions':['listStatus','getfileinfo','listCachePools','listCacheDirectives','listCorruptFileBlocks','monitorHealth','rollEditLog','open'],'isAudited':false,'accessResult':'ALLOWED'},{'users':['oozie'],'resources':{'path':{'values':['/user/oozie/share/'],'isRecursive':true}},'isAudited':false,'accessResult':'ALLOWED'},{'users':['spark'],'resources':{'path':{'values':['/user/spark/applicationHistory','/user/spark/spark2ApplicationHistory'],'isRecursive':true}},'isAudited':false,'accessResult':'ALLOWED'},{'users':['hue'],'resources':{'path':{'values':['/user/hue'],'isRecursive':true}},'isAudited':false,'accessResult':'ALLOWED'},{'users':['hbase'],'resources':{'path':{'values':['/hbase'],'isRecursive':true}},'isAudited':false,'accessResult':'ALLOWED'},{'users':['mapred'],'resources':{'path':{'values':['/user/history'],'isRecursive':true}},'isAudited':false,'accessResult':'ALLOWED'},{'actions':[],'isAudited':false,'accessResult':'ALLOWED','resources':{'path':{'values':['/user/yarn/mapreduce/mr-framework'],'isRecursive':true}},'users':['mapred','yarn']},{'isAudited':false,'accessResult':'ALLOWED','resources':{'path':{'values':['/tmp'],'isRecursive':true}},'users':['{OWNER}']},{'isAudited':false,'accessResult':'ALLOWED','resources':{'path':{'values':['*.staging*','*.sparkStaging*','*.hive-staging*','*_impala_insert_staging*'],'isRecursive':true}},'users':['{OWNER}']}]\",\"ranger.accesslogs.exclude.users.list\":\"cloudera-scm,hbase,hive,impala,mapred,solr,spark\",\"username\":\"hdfs\"}",
+  "isActive": true,
+  "version": "3"
+}
