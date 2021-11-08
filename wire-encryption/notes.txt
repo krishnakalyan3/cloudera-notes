@@ -5,4 +5,8 @@ keytool -list -keystore file_path.jks
 openssl s_client -connect <service-hostname>:<port>
 
 # Inspect PEM certificate
-openssl x509 -noout -in file_path.pem -noout -text 
+openssl x509 -enddate  -noout -in file_path.pem -noout -text
+
+# Conversion
+# DER - PEM
+openssl x509 -inform der -in hostname.cer -out hostname.pem 
