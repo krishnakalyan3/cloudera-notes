@@ -20,3 +20,19 @@ curl -u admin:admin $CM_URL'/api/v19/users'
 
 # Report the database server in use by CM
 curl -u admin:admin $CM_URL'/api/v19/cm/scmDbInfo'
+
+# Export Template
+http://skalyan-1.skalyan.root.hwx.site:7180/api/v42/clusters/{cluster_name}/export
+
+# Swagger
+http://skalyan-1.skalyan.root.hwx.site:7180/static/apidocs/ui/index.html
+
+# CM Api
+https://cloudera.github.io/cm_api/
+
+# v19
+https://cloudera.github.io/cm_api/apidocs/v19/
+
+# Generic
+https://archive.cloudera.com/cm7/7.2.4/generic/jar/cm_api/apidocs/index.html
+
