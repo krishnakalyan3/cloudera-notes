@@ -1,0 +1,359 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.skalyan</groupId>
+  <artifactId>emptyflowspark</artifactId>
+  <version>0.1</version>
+	<description></description>
+
+  <!-- See the following links for CDP 7.1.7 component and library versions
+  https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/runtime-release-notes/topics/xml-maven.html
+  https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/runtime-release-notes/topics/rt-pvc-runtime-component-versions.html -->
+
+  <properties>
+    <!-- PROJECT AND MAVEN SETTINGS/VERSIONS -->
+    <groupId>com.skalyan</groupId>
+    <artifactId>emptyflowspark</artifactId>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.surefire.version>3.0.0-M3</maven.surefire.version>
+    <!-- DEVELOPMENT AND TEST ENVIRONMENT SETTINGS/VERSIONS -->
+    <java.version>1.8</java.version>
+    <scala.binary.version>2.11</scala.binary.version>
+    <scala.version>${scala.binary.version}.12</scala.version>
+    <scalatest.junit.runner.version>0.1.8</scalatest.junit.runner.version>
+    <scalatest.version>3.2.3</scalatest.version>
+    <junit-platform-engine.version>1.6.0</junit-platform-engine.version>
+    <!-- note, for scala logging using grizzled is a better option (than direct slf4j / log4j) as it is created for scala and fool proof -->
+    <!-- explicit sj4j version is used to force all to using a common version where these otherwise deviate or conflict -->
+    <slf4j.version>1.7.30</slf4j.version>
+    <grizzled.version>1.3.4</grizzled.version>
+    <!-- HDP/CDP COMPONENT/DEPEDENCIES SETTINGS/VERSIONS -->
+    <cloudera.version>7.1.7.0-551</cloudera.version>
+    <hadoop.version>3.1.1</hadoop.version>
+    <cloudera.hadoop.version>${hadoop.version}.${cloudera.version}</cloudera.hadoop.version>
+    <spark.binary.version>2.4.7</spark.binary.version>
+    <spark.version>${spark.binary.version}.${cloudera.version}</spark.version>
+    <jackson.version>2.10.5</jackson.version>
+    <hive.warehouse.connector.version>1.0.0.${cloudera.version}</hive.warehouse.connector.version>
+    <databricks.spark.xml.version>0.4.1</databricks.spark.xml.version>
+    <!-- OTHER THIRD PARTY SETTINGS/VERSIONS (NOT RELATING TO HDP/CDP) -->
+    <javax.mail.version>1.4</javax.mail.version>
+  </properties>
+
+  <dependencies>
+    <!-- HDP/CDP COMPONENT/DEPEDENCIES -->
+
+    <!-- Note: Using spark-sql_${scala.binary.version} directly also includes the required depedencies of the necessary version
+    such as spark-core:jar:<version> and hive-storage-api:jar:<version> -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+    <!-- Force the jackson libraries to a consistent version -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.hortonworks.hive</groupId>
+      <artifactId>hive-warehouse-connector_${scala.binary.version}</artifactId>
+      <version>${hive.warehouse.connector.version}</version>
+      <scope>provided</scope>
+   </dependency>
+
+    <dependency>
+      <groupId>com.databricks</groupId>
+      <artifactId>spark-xml_${scala.binary.version}</artifactId>
+      <version>${databricks.spark.xml.version}</version>
+    </dependency>
+
+    <!-- OTHER THIRD PARTY (NOT RELATING TO HDP/CDP) -->
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>${javax.mail.version}</version>
+		</dependency>
+
+    <!-- DEVELOPMENT AND TEST ENVIRONMENT -->
+
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.clapper</groupId>
+      <artifactId>grizzled-slf4j_${scala.binary.version}</artifactId>
+      <version>${grizzled.version}</version>
+    </dependency>
+
+    <!-- Get sl4j to consistent version -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-engine</artifactId>
+      <version>${junit-platform-engine.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>co.helmethair</groupId>
+      <artifactId>scalatest-junit-runner</artifactId>
+      <version>${scalatest.junit.runner.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.binary.version}</artifactId>
+      <version>${scalatest.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Configure scala / java compiler goal -->
+        <plugin>
+        <groupId>org.eclipse.m2e</groupId>
+        <artifactId>lifecycle-mapping</artifactId>
+        <version>1.0.0</version>
+        <configuration>
+          <lifecycleMappingMetadata>
+            <pluginExecutions>
+              <pluginExecution>
+                <pluginExecutionFilter>
+                  <groupId>net.alchim31.maven</groupId>
+                  <artifactId>scala-maven-plugin</artifactId>
+                  <versionRange>4.4.0</versionRange>
+                  <goals>
+                    <goal>compile</goal>
+                    <goal>testCompile</goal>
+                  </goals>
+                </pluginExecutionFilter>
+                <action>
+                  <ignore/>
+                </action>
+              </pluginExecution>
+            </pluginExecutions>
+          </lifecycleMappingMetadata>
+        </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <!--<finalName>fast-repo-service</finalName>-->
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.1.0</version>
+        <!-- <executions>
+        <execution>
+          <id>auto-clean</id>
+          <phase>initialize</phase>
+          <goals>
+          <goal>clean</goal>
+          </goals>
+        </execution>
+        </executions> -->
+      </plugin>
+
+      <!-- Disable maven compiler, as scala compiler will do both java and scala -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>default-testCompile</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- scala plugin for compiling both scala and java 
+          NOTE: Uses internal java.home which doesn't work as takes ./jre/bin for javac wrongly, thus always set JAVA_HOME via script or globally to version required (a workaround) -->
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>4.4.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
+          <source>${java.version}</source>
+          <target>${java.version}</target> 
+          <javacArgs>
+            <javacArg>-source</javacArg>
+            <javacArg>${java.version}</javacArg>
+            <javacArg>-target</javacArg>
+            <javacArg>${java.version}</javacArg>
+          </javacArgs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.version}</version>
+        <configuration>
+          <forkCount>1</forkCount>
+          <reuseForks>true</reuseForks>
+          <!-- <argLine>-Xmx4096m -XX:MaxPermSize=256m</argLine> -->
+        </configuration>
+      </plugin>
+      
+      <!-- Generate a reduced set and merged (shaded) depedency jar without com.cloudera artifacts where also services like jdbc drivers are also merged in a proper way -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <!-- <finalName>${project.artifactId}-${project.version}-dependencies-shaded</finalName> -->
+              <outputFile>${project.build.directory}\${project.artifactId}-${project.version}-dependencies-shaded.jar</outputFile>
+              <!-- Minimise the jar size however note some needed things (logging impl specifically) need to be force added by include -->
+              <minimizeJar>true</minimizeJar>
+              <!-- Merge the service list from all the jars -->
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
+              </transformers>
+              <!-- Exclude avro content so that the later shaded avro content is only what we need to use for this project
+              and shading will mean this project shouldn't conflict with anything else downstream. Also exclude this projects artifact
+              as we have seperate jar for that and we don't want it again in our depedencies -->
+              <artifactSet>
+                <excludes>
+                  <exclude>${groupId}:${artifactId}</exclude>
+                  <exclude>org.apache.avro:avro-mapred</exclude>
+                  <exclude>org.apache.avro:avro-ipc</exclude>
+                </excludes>
+              </artifactSet>
+              <filters>
+                <!-- Ensure we do not include jar security signings -->
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.sf</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.dsa</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/*.rsa</exclude>
+                    <exclude>META-INF/*.EC</exclude>
+                    <exclude>META-INF/*.ec</exclude>
+                    <exclude>META-INF/MSFTSIG.SF</exclude>
+                    <exclude>META-INF/MSFTSIG.RSA</exclude>
+                  </excludes>
+                </filter>
+                <!-- Force include hortonworks shaded Jersey Impl which otherwise gets removed by the shading process
+                (com.hortonworks.registries.shaded.org.glassfish.jersey.internal.RuntimeDelegateImpl) -->
+                <filter>
+                  <artifact>com.hortonworks.registries:jersey-shaded</artifact>
+                  <includes>
+                    <include>**</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>org.apache.logging.log4j:log4j-core</artifact>
+                  <includes>
+                    <include>**</include>
+                  </includes>
+                </filter>             
+              </filters>
+              <!-- Relocate avro classes that our app specifically uses so it does not conflict with other avro classes/versions downstream
+              as this commonly conflicts with other jars in the class path of the using applications -->
+              <relocations>
+                <relocation>
+                  <pattern>org.apache.avro</pattern>
+                  <shadedPattern>com.hortonworks.shaded.org.apache.avro</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>cloudera</id>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+    </repository>
+
+    <repository>
+      <id>central</id>
+      <name>Default Repository</name>
+      <layout>default</layout>
+      <url>https://repo1.maven.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- resort to using udex repository from git if we really cannot get the dependency from somewhere else 
+    NOTE: Please don't ever use system scope but rather update udex repository for team.
+    Also, per project, the relative path must be set accordingly which assumes all projects are at the same level locally, thus gdcd, u2020, udexrepository in same root folder -->
+    <!-- <repository>
+      <id>localrepos</id>
+      <name>localrepos</name>
+      <url>file:///${project.basedir}/../../../../../udex-repository/repository</url>
+    </repository> -->
+    
+  </repositories>
+</project>

@@ -2,3 +2,5 @@ export SPARK_EXAMPELS=/opt/cloudera/parcels/CDH/lib/spark/examples/jars
 
 spark-submit --class org.apache.spark.examples.SparkPi --master yarn \
 --deploy-mode client $SPARK_EXAMPELS/spark-examples_*.jar 10
+
+spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster --conf spark.security.credentials.hbase.enabled=false --conf spark.yarn.tags=myspark-test --executor-memory 2G --num-executors 330  --queue=root $SPARK_EXAMPELS/spark-examples_*.jar 800
