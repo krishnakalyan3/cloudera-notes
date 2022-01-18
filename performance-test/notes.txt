@@ -1,6 +1,49 @@
 export SPARK_EXAMPELS=/opt/cloudera/parcels/CDH/lib/spark/examples/jars
 
+# yarn.scheduler.capacity.per-node-heartbeat.multiple-assignments-enabled=false
+
 spark-submit --class org.apache.spark.examples.SparkPi --master yarn \
 --deploy-mode client $SPARK_EXAMPELS/spark-examples_*.jar 10
 
-spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster --conf spark.security.credentials.hbase.enabled=false --conf spark.yarn.tags=myspark-test --executor-memory 2G --num-executors 330  --queue=root $SPARK_EXAMPELS/spark-examples_*.jar 800
+spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster --conf spark.security.credentials.hbase.enabled=false --conf spark.yarn.tags=myspark-test --executor-memory 2G --num-executors 330  --queue=root $SPARK_EXAMPELS/spark-examples_*.jar 80
+
+yarn.scheduler.fair.assignmultiple = false
+
+export CDH_HOME=/opt/cloudera/parcels/CDH/jars
+export TG_4GB=40000000
+export TG_50G=500000000
+export TG_1TB=10000000000
+
+# Teragen 1TB
+time yarn jar $CDH_HOME/hadoop-mapreduce-examples-3.0.0-cdh6.1.0.jar teragen \
+-Dmapred.map.tasks.speculative.execution=false \
+-Ddfs.replication=1 -Dmapred.map.tasks=126 1t output/teragen1-terasortinput
+
+# Teragen 1TB with replication
+time yarn jar $CDH_HOME/hadoop-mapreduce-examples-3.0.0-cdh6.1.0.jar teragen \
+-Dmapred.map.tasks.speculative.execution=false \
+-Ddfs.replication=3 -Dmapred.map.tasks=126 1t output/teragen3-terasortinput
+
+# Tersort 1TB
+time yarn jar $CDH_HOME/hadoop-mapreduce-examples-3.0.0-cdh6.1.0.jar terasort \
+-Dmapred.map.tasks.speculative.execution=false \
+-Dmapreduce.terasort.output.replication=1 \
+-Dmapred.map.tasks=126 \
+-Dmapred.reduce.tasks=63 \
+output/teragen1-terasortinput \
+output/terasort1-output
+
+time yarn jar $CDH_HOME/hadoop-mapreduce-examples-3.0.0-cdh6.1.0.jar terasort \
+-Dmapred.map.tasks.speculative.execution=false \
+-Dmapreduce.terasort.output.replication=1 \
+-Dmapred.map.tasks=126 \
+-Dmapred.reduce.tasks=63 \
+output/teragen3-terasortinput \
+output/terasort3-output
+
+-Dmapred.map.tasks.speculative.execution=false \
+-Dmapreduce.terasort.output.replication=1 \
+-Dmapred.map.tasks=12 \
+-Dmapred.reduce.tasks=4 \
+-Ddfs.replication=1 \
+0
