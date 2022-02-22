@@ -10,6 +10,9 @@ chmod +x Miniconda3-latest-Linux-x86_64.sh
 echo export PATH=$PATH:$(pwd)/miniconda3/bin  >> ~/.bashrc
 source .bashrc
 
+conda create -n datascience python=3.7
+conda activate datascience
+
 # Install Jupyter La
 conda install -c conda-forge jupyterlab -y
 jupyter notebook --generate-config
